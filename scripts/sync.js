@@ -39,7 +39,7 @@ const run = async () => {
             try {
                 const modulePath = `${provider}/${project}/node_modules/${package.name}`;
                 await exec('mkdir', ['-p', modulePath]);
-                await exec('rsync', ['-avz', providerPath, modulePath]);
+                await exec('rsync', ['-avz', providerPath + '/', modulePath]);
             } catch (e) {
                 console.error(`Failed to sync module from ${path} to ${provider}`);
             }
