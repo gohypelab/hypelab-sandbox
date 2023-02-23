@@ -34,6 +34,8 @@ const run = async () => {
         const projects = await promises.readdir(provider);
 
         for (const project of projects) {
+            if (ignore.includes(project) || project.startsWith('.')) continue;
+            
             try {
                 const modulePath = `${provider}/${project}/node_modules/${package.name}`;
                 await exec('mkdir', ['-p', modulePath]);
