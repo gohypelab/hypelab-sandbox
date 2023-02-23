@@ -1,0 +1,20 @@
+{
+  "name": "hypelab-provider-tests",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sync": "node scripts/sync.js",
+    "test": "node scripts/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gohypelab/hypelab-provider-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gohypelab/hypelab-provider-tests/issues"
+  },
+  "homepage": "https://github.com/gohypelab/hypelab-provider-tests#readme"
+}
