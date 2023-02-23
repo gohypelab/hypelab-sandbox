@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-app",
+  "name": "vite-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,9 +13,11 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.4.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
+    "cypress": "^12.6.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }

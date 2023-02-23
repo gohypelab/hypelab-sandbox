@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { HypeLab, HypeLabContext, Environment } from 'hypelab-react';
+import { BannerComponent } from './BannerComponent';
 
 const client = new HypeLab({
   URL: 'https://api.hypelab-staging.com',
@@ -10,12 +11,10 @@ const client = new HypeLab({
   environment: Environment.Development,
 });
 
-/* <Banner placement="563c92a85b" /> */
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <HypeLabContext client={client}>
-      <App />
+      <BannerComponent />
     </HypeLabContext>
   </React.StrictMode>
 );
