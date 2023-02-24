@@ -2,7 +2,7 @@ import { Banner, HypeLabContext, Environment, HypeLab } from 'hypelab-react';
 
 const client = new HypeLab({
   URL: 'https://api.hypelab-staging.com',
-  propertySlug: 'dripdripdrip',
+  propertySlug: '3eb413c650', // gallery
   environment: Environment.Development,
 });
 
