@@ -23,7 +23,7 @@ describe('<NativeComponent />', () => {
       'The smartest way to securely store your crypto. Ledger hardware wallets bring peace of mind to over 4 million users.'
     );
     cy.get('[data-cy="displayUrl"]').should('have.text', 'ledger.com');
-    cy.get('[data-cy="ctaUrl"]')
+    cy.get('[data-cy="ctaLink"]')
       .invoke('attr', 'href')
       .should(
         'eq',

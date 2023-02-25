@@ -3,15 +3,15 @@ import { BannerComponent } from '../components/BannerComponent';
 
 describe('<BannerComponent />', () => {
   it('renders a clickable banner image', () => {
-    cy.intercept(
+    cy.interceptWithFile(
       {
         method: 'POST',
         url: 'https://api.hypelab-staging.com/v1/requests',
       },
-      {
-        fixture: 'medium_rectangle.json',
-      }
-    ).as('matchedUrl');
+      'medium_rectangle'
+    );
+
+    cy.viewport(300, 250);
     cy.mount(<BannerComponent />);
     cy.get('img')
       .invoke('attr', 'src')
