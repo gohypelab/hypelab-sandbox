@@ -9,7 +9,7 @@ const client = new HypeLab({
 function BannerComponent() {
   return (
     <HypeLabContext client={client}>
-      <Banner placement="563c92a85b" />
+      <Banner placement="38331eab13" />
     </HypeLabContext>
   );
 }
