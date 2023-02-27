@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "echo test"
+    "cypress": "cypress open",
+    "test": "npx cypress run --component --config video=false screenshotOnRunFailure=false"
   },
   "dependencies": {
     "cypress": "^12.6.0",
