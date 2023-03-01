@@ -2,15 +2,13 @@
 describe('Native', () => {
   it('renders a clickable native ad', () => {
     cy.visit('../../index.html');
-    cy.intercept(
+    cy.interceptWithFile(
       {
         method: 'POST',
         url: 'https://api.hypelab-staging.com/v1/requests',
       },
-      {
-        fixture: 'native.json',
-      }
-    ).as('matchedUrl');
+      'native'
+    );
 
     cy.viewport(500, 520);
 
