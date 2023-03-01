@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules/hypelab-vanilla/index.js"></script>
+</head>
+<body>
+    <div id="nativeSlot1">
+        <img data-ref="icon" data-cy="icon">
+        <div data-ref="advertiser" data-cy="advertiser"></div>
+        <div data-ref="displayUrl" data-cy="displayUrl"></div>
+        <div data-ref="headline" data-cy="headline"></div>
+        <div data-ref="body" data-cy="body"></div>
+        <div data-ref="mediaContent" data-cy="mediaContent"></div>
+        <a data-ref="ctaLink" data-cy="ctaLink">
+            <div data-ref="ctaText" data-cy="ctaText"></div>
+        </a>
+    </div>
+    <script>
+        let client = new HypeLab.Client({
+            URL: 'https://api.hypelab-staging.com',
+            propertySlug: '3eb413c650',
+            environment: HypeLab.Environment.Development,
+        });
+
+        HypeLab.Client.setClient(client);
+        HypeLab.loadNative({ placement: '5d788944b1', container: 'nativeSlot1' });
+    </script>
+</body>
+</html>

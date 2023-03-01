@@ -1,7 +1,7 @@
 
 describe('Native', () => {
   it('renders a clickable native ad', () => {
-    cy.visit('../../index.html');
+    cy.visit('../../native.html');
     cy.interceptWithFile(
       {
         method: 'POST',

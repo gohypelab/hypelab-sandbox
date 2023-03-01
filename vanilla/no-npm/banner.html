@@ -8,17 +8,6 @@
     <script src="node_modules/hypelab-vanilla/index.js"></script>
 </head>
 <body>
-    <div id="nativeSlot1">
-        <img data-ref="icon" data-cy="icon">
-        <div data-ref="advertiser" data-cy="advertiser"></div>
-        <div data-ref="displayUrl" data-cy="displayUrl"></div>
-        <div data-ref="headline" data-cy="headline"></div>
-        <div data-ref="body" data-cy="body"></div>
-        <div data-ref="mediaContent" data-cy="mediaContent"></div>
-        <a data-ref="ctaLink" data-cy="ctaLink">
-            <div data-ref="ctaText" data-cy="ctaText"></div>
-        </a>
-    </div>
     <div id="banner"></div>
     <script>
         let client = new HypeLab.Client({
@@ -28,7 +17,6 @@
         });
 
         HypeLab.Client.setClient(client);
-        HypeLab.loadNative({ placement: '5d788944b1', container: 'nativeSlot1' });
         HypeLab.loadBanner({ placement: '563c92a85b', container: 'banner' });
     </script>
 </body>
