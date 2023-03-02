@@ -15,9 +15,9 @@ const fetchPath = async () => {
 const run = async () => {
   const path = await fetchPath();
 
-  const providers = await promises.readdir('.');
+  const providers = await promises.readdir('./providers/');
 
-  const ignore = ['scripts', 'package.json', 'package-lock.json', 'README.md', 'scripts'];
+  const ignore = [];
 
   for (const provider of providers) {
     if (ignore.includes(provider) || provider.startsWith('.')) continue;
@@ -31,13 +31,13 @@ const run = async () => {
     }
 
     const package = await json(providerPath + '/package.json');
-    const projects = await promises.readdir(provider);
+    const projects = await promises.readdir(`./providers/${provider}`);
 
     for (const project of projects) {
       if (ignore.includes(project) || project.startsWith('.')) continue;
 
       try {
-        const modulePath = `${provider}/${project}/node_modules/${package.name}`;
+        const modulePath = `./providers/${provider}/${project}/node_modules/${package.name}`;
         await exec('mkdir', ['-p', modulePath]);
         await exec('rsync', ['-avz', providerPath + '/', modulePath]);
       } catch (e) {

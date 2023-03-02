@@ -1,20 +1,16 @@
-import React from 'react';
-import { NativeComponent } from './NativeComponent';
 
-describe('<NativeComponent />', () => {
+describe('Native', () => {
   it('renders a clickable native ad', () => {
-    cy.intercept(
+    cy.visit('../../native.html');
+    cy.interceptWithFile(
       {
         method: 'POST',
         url: 'https://api.hypelab-staging.com/v1/requests',
       },
-      {
-        fixture: 'native.json',
-      }
-    ).as('matchedUrl');
+      'native'
+    );
 
     cy.viewport(500, 520);
-    cy.mount(<NativeComponent />);
 
     cy.get('[data-cy="advertiser"]').should('have.text', 'Ledger');
     cy.get('[data-cy="headline"]').should('have.text', 'Store your crypto safely');

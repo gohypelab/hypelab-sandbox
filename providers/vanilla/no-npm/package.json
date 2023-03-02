@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress": "cypress open",
     "test": "npx cypress run --config video=false screenshotOnRunFailure=false"
   },
   "author": "",

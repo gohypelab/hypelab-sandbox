@@ -1,5 +1,5 @@
 import React from "react";
-import { BannerComponent } from "../components/BannerComponent";
+import { BannerComponent } from "./BannerComponent";
 
 describe("<BannerComponent />", () => {
   it("renders a clickable banner image", () => {
