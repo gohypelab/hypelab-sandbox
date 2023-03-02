@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="node_modules/hypelab-vanilla/index.js"></script>
-</head>
-<body>
-    <div id="nativeSlot1">
-        <img data-ref="icon" data-cy="icon">
-        <div data-ref="advertiser" data-cy="advertiser"></div>
-        <div data-ref="displayUrl" data-cy="displayUrl"></div>
-        <div data-ref="headline" data-cy="headline"></div>
-        <div data-ref="body" data-cy="body"></div>
-        <div data-ref="mediaContent" data-cy="mediaContent"></div>
-        <a data-ref="ctaLink" data-cy="ctaLink">
-            <div data-ref="ctaText" data-cy="ctaText"></div>
-        </a>
+  </head>
+  <body>
+    <div id="nativeSlot">
+      <div class="bg-black p-5">
+        <div class="relative flex items-center">
+          <div class="flex-shrink-0">
+            <img data-cy="icon" data-ref="icon" class="h-10 w-10 rounded-full mr-5" />
+          </div>
+          <div class="min-w-0 flex-1">
+            <span class="absolute inset-0" aria-hidden="true"></span>
+            <p class="font-medium text-slate-400">@<span data-cy="advertiser" data-ref="advertiser"></span></p>
+            <p data-cy="displayUrl" data-ref="displayUrl" class="text-emerald-300 text-sm"></p>
+          </div>
+        </div>
+        <div data-ref="body" data-cy="body" class="mt-3 text-white"></div>
+        <div class="body-row text-left">
+          <div data-cy="headline" data-ref="headline" class="mt-3 text-white"></div>
+
+          <div class="mt-5">
+            <a data-cy="ctaLink" data-ref="ctaLink" href="/" target="_blank" rel="noreferrer">
+              <div data-cy="mediaContent" data-ref="mediaContent" class="mediaContent"></div>
+              <div
+                data-cy="ctaText"
+                data-ref="ctaText"
+                class="rounded-full bg-emerald-300 px-10 py-2 text-black font-bold mt-5 text-center"
+              ></div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
-        let client = new HypeLab.Client({
-            URL: 'https://api.hypelab-staging.com',
-            propertySlug: '3eb413c650',
-            environment: HypeLab.Environment.Development,
-        });
+      let client = new HypeLab.Client({
+        URL: 'https://api.hypelab-staging.com',
+        propertySlug: '3eb413c650',
+        environment: HypeLab.Environment.Development,
+      });
 
-        HypeLab.setClient(client);
-        HypeLab.loadNative({ placement: '5d788944b1', container: 'nativeSlot1' });
+      client.identity.setWalletAddresses(['0x123']);
+
+      HypeLab.setClient(client);
+      HypeLab.loadNative({ placement: '5d788944b1', container: 'nativeSlot' });
     </script>
-</body>
+  </body>
 </html>

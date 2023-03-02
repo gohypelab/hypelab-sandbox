@@ -1,7 +1,5 @@
-
 describe('Native', () => {
   it('renders a clickable native ad', () => {
-    cy.visit('../../native.html');
     cy.interceptWithFile(
       {
         method: 'POST',
@@ -10,6 +8,7 @@ describe('Native', () => {
       'native'
     );
 
+    cy.visit('../../native.html');
     cy.viewport(500, 520);
 
     cy.get('[data-cy="advertiser"]').should('have.text', 'Ledger');
@@ -26,11 +25,9 @@ describe('Native', () => {
         'http://web.hypelab.com/click?campaign_slug=b33847379f&creative_set_slug=4cde3a5f3c&placement_slug=4cd3f56dc9'
       );
     cy.get('[data-cy="ctaText"]').should('have.text', 'Shop now');
-    cy.get('[data-cy="mediaContent"]').children('video').should(
-      'have.attr',
-      'src',
-      'https://di30gnjrtlisb.cloudfront.net/up/asset/a61703075a/199389cb82.mp4?tr=w-600'
-    );
+    cy.get('[data-cy="mediaContent"]')
+      .children('video')
+      .should('have.attr', 'src', 'https://di30gnjrtlisb.cloudfront.net/up/asset/a61703075a/199389cb82.mp4?tr=w-600');
     cy.get('[data-cy="icon"]').should(
       'have.attr',
       'src',

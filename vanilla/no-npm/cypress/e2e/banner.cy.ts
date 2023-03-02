@@ -1,7 +1,5 @@
-
 describe('Banner', () => {
   it('renders a clickable banner image', () => {
-    cy.visit('../../banner.html');
     cy.interceptWithFile(
       {
         method: 'POST',
@@ -9,6 +7,7 @@ describe('Banner', () => {
       },
       'medium_rectangle'
     );
+    cy.visit('../../banner.html');
 
     cy.viewport(300, 250);
     cy.get('img')
