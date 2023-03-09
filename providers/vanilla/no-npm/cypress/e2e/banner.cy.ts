@@ -1,7 +1,5 @@
-
 describe('Banner', () => {
   it('renders a clickable banner image', () => {
-    cy.visit('../../banner.html');
     cy.interceptWithFile(
       {
         method: 'POST',
@@ -9,6 +7,7 @@ describe('Banner', () => {
       },
       'medium_rectangle'
     );
+    cy.visit('../../banner.html');
 
     cy.viewport(300, 250);
     cy.get('img')
@@ -18,7 +17,35 @@ describe('Banner', () => {
       .invoke('attr', 'href')
       .should(
         'eq',
-        'http://web.hypelab-staging.com/click?campaign_slug=7b2dac4cfe\u0026creative_set_slug=df73049914\u0026placement_slug=563c92a85b'
+        'http://web.hypelab-staging.com/click?campaign_slug=7b2dac4cfe\u0026creative_set_slug=df73049914\u0026placement_slug=38331eab13'
       );
+  });
+
+  it('fires the impression ping', () => {
+    cy.interceptWithFile(
+      {
+        method: 'POST',
+        url: 'https://api.hypelab-staging.com/v1/requests',
+      },
+      'medium_rectangle'
+    );
+
+    cy.intercept('POST', 'https://api.hypelab-staging.com/v1/events', (req) => {
+      expect(req.body).to.deep.include({
+        campaign_slug: '7b2dac4cfe',
+        creative_set_slug: 'df73049914',
+        placement_slug: '38331eab13',
+        property_slug: '3eb413c650',
+        type: 'impression',
+        wids: ['0x123'],
+      });
+      expect(req.body.uuid).to.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+      req.reply({ status: 'success' });
+    }).as('impressionUrl');
+
+    cy.visit('../../banner.html');
+    cy.viewport(300, 250);
+
+    cy.wait('@impressionUrl');
   });
 });

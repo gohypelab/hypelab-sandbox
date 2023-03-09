@@ -3,15 +3,13 @@ import { NativeComponent } from './NativeComponent';
 
 describe('<NativeComponent />', () => {
   it('renders a clickable native ad', () => {
-    cy.intercept(
+    cy.interceptWithFile(
       {
         method: 'POST',
         url: 'https://api.hypelab-staging.com/v1/requests',
       },
-      {
-        fixture: 'native.json',
-      }
-    ).as('matchedUrl');
+      'native'
+    );
 
     cy.viewport(500, 520);
     cy.mount(<NativeComponent />);
@@ -38,5 +36,33 @@ describe('<NativeComponent />', () => {
       'src',
       'https://di30gnjrtlisb.cloudfront.net/up/asset/cd7f4397e5/b83188c4f0.png?tr=w-100'
     );
+  });
+
+  it('fires the impression ping', () => {
+    cy.interceptWithFile(
+      {
+        method: 'POST',
+        url: 'https://api.hypelab-staging.com/v1/requests',
+      },
+      'native'
+    );
+
+    cy.intercept('POST', 'https://api.hypelab-staging.com/v1/events', (req) => {
+      expect(req.body).to.deep.include({
+        campaign_slug: 'b33847379f',
+        creative_set_slug: '4cde3a5f3c',
+        placement_slug: '5d788944b1',
+        property_slug: '3eb413c650',
+        type: 'impression',
+        wids: ['0x123'],
+      });
+      expect(req.body.uuid).to.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+      req.reply({ status: 'success' });
+    }).as('impressionUrl');
+
+    cy.mount(<NativeComponent />);
+    cy.viewport(500, 520);
+
+    cy.wait('@impressionUrl');
   });
 });

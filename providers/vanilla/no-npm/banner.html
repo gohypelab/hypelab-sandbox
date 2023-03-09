@@ -17,8 +17,10 @@
         environment: HypeLab.Environment.Development,
       });
 
-      HypeLab.Client.setClient(client);
-      HypeLab.loadBanner({ placement: '563c92a85b', container: 'banner' });
+      client.identity.setWalletAddresses(['0x123']);
+
+      HypeLab.setClient(client);
+      HypeLab.loadBanner({ placement: '38331eab13', container: 'banner' });
     </script>
   </body>
 </html>

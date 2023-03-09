@@ -1,4 +1,5 @@
 import { Banner, HypeLabContext, Environment, HypeLab } from 'hypelab-react';
+import { useEffect } from 'react';
 
 const client = new HypeLab({
   URL: 'https://api.hypelab-staging.com',
@@ -7,6 +8,10 @@ const client = new HypeLab({
 });
 
 function BannerComponent() {
+  useEffect(() => {
+    client.identity.setWalletAddresses(['0x123']);
+  }, []);
+
   return (
     <HypeLabContext client={client}>
       <Banner placement="38331eab13" />

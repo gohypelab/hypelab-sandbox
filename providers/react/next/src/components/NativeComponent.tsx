@@ -1,5 +1,5 @@
 import { HypeLabContext, Environment, HypeLab, useNative } from 'hypelab-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const client = new HypeLab({
   URL: 'https://api.hypelab-staging.com',
@@ -8,6 +8,10 @@ const client = new HypeLab({
 });
 
 function NativeComponent() {
+  useEffect(() => {
+    client.identity.setWalletAddresses(['0x123']);
+  }, [client]);
+
   function Native() {
     let ad = useNative({ placement: '5d788944b1' });
 
