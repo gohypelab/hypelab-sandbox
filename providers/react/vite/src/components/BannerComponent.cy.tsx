@@ -10,6 +10,13 @@ describe("<BannerComponent />", () => {
       },
       "medium_rectangle"
     );
+    cy.interceptWithFragment(
+      {
+        method: 'GET',
+        url: 'https://fragments.hypelab.com/bundle.hype',
+      },
+      'banner'
+    );
 
     cy.viewport(300, 250);
     cy.mount(<BannerComponent />);
@@ -34,6 +41,13 @@ describe("<BannerComponent />", () => {
         url: "https://api.hypelab-staging.com/v1/requests",
       },
       "medium_rectangle"
+    );
+    cy.interceptWithFragment(
+      {
+        method: 'GET',
+        url: 'https://fragments.hypelab.com/bundle.hype',
+      },
+      'banner'
     );
 
     cy.intercept("POST", "https://api.hypelab-staging.com/v1/events", (req) => {

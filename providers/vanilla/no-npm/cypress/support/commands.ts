@@ -35,3 +35,15 @@ Cypress.Commands.add('interceptWithFile', (routeMatcher: RouteMatcher, fixtureNa
         .as('matchedUrl');
     });
   });
+
+Cypress.Commands.add('interceptWithFragment', (routeMatcher: RouteMatcher, fragmentName: string) => {
+  return cy.readFile(`cypress/fixtures/fragments/${fragmentName}.hype`).then((contents) => {
+    console.log('intercept', contents, routeMatcher);
+    return cy
+      .intercept(routeMatcher, (req) => {
+        console.log('reply with ', req);
+        req.reply({ statusCode: 200, body: contents });
+      })
+      .as('matchedFragment');
+  });
+});

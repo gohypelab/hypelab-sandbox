@@ -7,6 +7,13 @@ describe('Banner', () => {
       },
       'medium_rectangle'
     );
+    cy.interceptWithFragment(
+      {
+        method: 'GET',
+        url: 'https://fragments.hypelab.com/bundle.hype',
+      },
+      'banner'
+    );
     cy.visit('../../banner.html');
 
     cy.viewport(300, 250);
@@ -29,6 +36,14 @@ describe('Banner', () => {
       },
       'medium_rectangle'
     );
+    cy.interceptWithFragment(
+      {
+        method: 'GET',
+        url: 'https://fragments.hypelab.com/bundle.hype',
+      },
+      'banner'
+    );
+    cy.visit('../../banner.html');
 
     cy.intercept('POST', 'https://api.hypelab-staging.com/v1/events', (req) => {
       expect(req.body).to.deep.include({

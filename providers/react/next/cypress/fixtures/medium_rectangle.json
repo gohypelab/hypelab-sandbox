@@ -14,6 +14,9 @@
     "creative_set_type": "medium_rectangle",
     "creative_set": {
       "image": "https://di30gnjrtlisb.cloudfront.net/up/asset/bd84407042/a6b54dc0b3.png?tr=n-medium_rectangle"
+    },
+    "fragment": {
+      "url": "https://fragments.hypelab.com/bundle.hype"
     }
   }
 }
