@@ -13,7 +13,7 @@
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "remix-serve build",
     "cypress": "cypress open",
-    "test": "npx cypress run --component --config video=false screenshotOnRunFailure=false"
+    "test": "npx cypress run --quiet --component --config video=false screenshotOnRunFailure=false"
   },
   "prettier": {},
   "eslintIgnore": [

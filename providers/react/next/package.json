@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open",
-    "test": "npx cypress run --component --config video=false screenshotOnRunFailure=false"
+    "test": "npx cypress run --quiet --component --config video=false screenshotOnRunFailure=false"
   },
   "dependencies": {
     "@types/node": "18.14.2",

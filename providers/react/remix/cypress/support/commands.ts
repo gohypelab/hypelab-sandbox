@@ -50,3 +50,18 @@ Cypress.Commands.add(
       });
   }
 );
+
+Cypress.Commands.add(
+  "interceptWithFragment",
+  (routeMatcher: RouteMatcher, fragmentName: string) => {
+    return cy
+      .readFile(`cypress/fixtures/fragments/${fragmentName}.hype`)
+      .then((contents) => {
+        return cy
+          .intercept(routeMatcher, (req) => {
+            req.reply({ statusCode: 200, body: contents });
+          })
+          .as("matchedFragment");
+      });
+  }
+);
