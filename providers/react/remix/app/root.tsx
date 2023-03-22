@@ -1,5 +1,5 @@
 import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+
 import {
   Links,
   LiveReload,
@@ -9,14 +9,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import { HypeLabContext, Environment, HypeLab, useNative } from "hypelab-react";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-
-const client = new HypeLab({
-  URL: "https://api.hypelab-staging.com",
-  propertySlug: "3eb413c650",
-  environment: Environment.Development,
-});
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -30,18 +23,20 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full bg-black">
       <head>
         <Meta />
         <Links />
       </head>
       <body className="h-full">
-        <HypeLabContext client={client}>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-          <LiveReload />
-        </HypeLabContext>
+        <div className="grid h-screen place-items-center">
+          <div className="max-w-lg ">
+            <Outlet />
+          </div>
+        </div>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
       </body>
     </html>
   );

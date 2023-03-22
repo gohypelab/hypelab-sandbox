@@ -1,7 +1,6 @@
-
-import { RouteHandler, RouteMatcher, StringMatcher } from 'cypress/types/net-stubbing';
+/// <reference types="cypress" />
 // ***********************************************
-// This example commands.js shows you how to
+// This example commands.ts shows you how to
 // create various custom commands and overwrite
 // existing commands.
 //
@@ -25,23 +24,46 @@ import { RouteHandler, RouteMatcher, StringMatcher } from 'cypress/types/net-stu
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+//
+// declare global {
+//   namespace Cypress {
+//     interface Chainable {
+//       login(email: string, password: string): Chainable<void>
+//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+//     }
+//   }
+// }
 
-Cypress.Commands.add('interceptWithFile', (routeMatcher: RouteMatcher, fixtureName: string) => {
-    return cy.readFile(`cypress/fixtures/${fixtureName}.json`).then((contents) => {
-      return cy
-        .intercept(routeMatcher, {
-          body: contents,
-        })
-        .as('matchedUrl');
+Cypress.Commands.add('interceptWithFile', (routeMatcher: RouteMatcher, filePath: string) => {
+  return cy.readFile(filePath).then((contents) => {
+    return cy.intercept(routeMatcher, {
+      body: contents,
     });
   });
+});
 
-Cypress.Commands.add('interceptWithFragment', (routeMatcher: RouteMatcher, fragmentName: string) => {
-  return cy.readFile(`cypress/fixtures/fragments/${fragmentName}.hype`).then((contents) => {
-    return cy
-      .intercept(routeMatcher, (req) => {
-        req.reply({ statusCode: 200, body: contents });
-      })
-      .as('matchedFragment');
+// Intercepts the ad request with the specified format response
+Cypress.Commands.add('interceptAdRequest', (formatFixture: string) => {
+  cy.interceptWithFile(
+    {
+      method: 'POST',
+      url: 'https://api.hypelab-staging.com/v1/requests',
+    },
+    `cypress/fixtures/${formatFixture}`
+  ).as('matchedRequest');
+});
+
+// Looks up the CDN URL returned in the format response and intercepts it with the specified fragment file
+Cypress.Commands.add('interceptFragmentRequest', (formatFixture: string, fragmentFile: string) => {
+  cy.fixture(formatFixture).then((formatResponse) => {
+    cy.interceptWithFile(
+      {
+        method: 'GET',
+        url: formatResponse.data.fragment.url,
+      },
+      `cypress/fixtures/fragments/${fragmentFile}`
+    ).as('matchedFragment');
   });
 });

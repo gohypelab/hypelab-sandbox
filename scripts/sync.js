@@ -1,85 +1,50 @@
 const { promises } = require('fs');
 const { exec } = require('./utils/exec');
 
-const fetchPath = async () => {
-  try {
-    const path = await promises.readFile('.path', 'utf8');
-    return path;
-  } catch (e) {
-    const update = await ask('Enter your local hypelab-ts path:');
-    await promises.writeFile('.path', update, 'utf8');
-    return update;
-  }
-};
-
 const run = async () => {
-  const path = await fetchPath();
+  // Copy React components into react frameworks
+  componentPath = './tests/react/src/components/';
+  destinationPaths = ['./providers/react/next/src/components', './providers/react/remix/app/components'];
+  let destinationPath;
 
-  const providers = await promises.readdir('./providers/');
-
-  const ignore = [];
-
-  for (const provider of providers) {
-    if (ignore.includes(provider) || provider.startsWith('.')) continue;
-
-    const providerPath = `${path}/dist/providers/${provider}`;
-    const built = await alreadyExists(providerPath);
-
-    if (!built) {
-      console.error('You need to build hypelab-ts before you can sync');
-      return;
+  try {
+    for (let i = 0; i < destinationPaths.length; i++) {
+      destinationPath = destinationPaths[i];
+      await exec('rsync', ['-avz', componentPath, destinationPath]);
     }
+  } catch (e) {
+    console.error(`Failed to sync module from ${componentPath} to ${destinationPath}`);
+  }
 
-    const package = await json(providerPath + '/package.json');
-    const projects = await promises.readdir(`./providers/${provider}`);
+  // Copy common cypress functions (e.g., intercepting ad request) into all frameworks
+  cypressPath = './tests/common/cypress/';
+  destinationPaths = [
+    './providers/react/next/cypress',
+    './providers/react/remix/cypress',
+    './providers/vanilla/no-npm/cypress',
+  ];
 
-    for (const project of projects) {
-      if (ignore.includes(project) || project.startsWith('.')) continue;
-
-      try {
-        const modulePath = `./providers/${provider}/${project}/node_modules/${package.name}`;
-        await exec('mkdir', ['-p', modulePath]);
-        await exec('rsync', ['-avz', providerPath + '/', modulePath]);
-      } catch (e) {
-        console.error(`Failed to sync module from ${path} to ${provider}`);
-      }
+  try {
+    for (let i = 0; i < destinationPaths.length; i++) {
+      destinationPath = destinationPaths[i];
+      await exec('rsync', ['-avz', cypressPath, destinationPath]);
     }
+  } catch (e) {
+    console.error(`Failed to sync module from ${cypressPath} to ${destinationPath}`);
+  }
+
+  // Copy e2e React-specific tests (e.g., using localhost:3000) into React frameworks
+  cypressPath = './tests/react/cypress/';
+  destinationPaths = ['./providers/react/next/cypress', './providers/react/remix/cypress'];
+
+  try {
+    for (let i = 0; i < destinationPaths.length; i++) {
+      destinationPath = destinationPaths[i];
+      await exec('rsync', ['-avz', cypressPath, destinationPath]);
+    }
+  } catch (e) {
+    console.error(`Failed to sync module from ${cypressPath} to ${destinationPath}`);
   }
 };
 
 run();
-
-// MARK: Utils
-
-const readline = require('readline');
-
-const ask = (prompt) =>
-  new Promise((resolve) => {
-    const interface = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    interface.question(prompt, (result) => {
-      resolve(result);
-      interface.close();
-    });
-  });
-
-const json = async (path) => {
-  try {
-    const content = await promises.readFile(path, 'utf8');
-    return JSON.parse(content);
-  } catch (e) {
-    return null;
-  }
-};
-
-const alreadyExists = async (path) => {
-  try {
-    await promises.stat(path);
-    return true;
-  } catch (e) {
-    return false;
-  }
-};

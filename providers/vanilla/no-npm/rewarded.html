@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="node_modules/hypelab-vanilla/index.js"></script>
+  </head>
+  <body>
+    <div id="rewarded"></div>
+    <div>
+      <button
+        id="hypelab-btn"
+        className="rounded-md border border-gray-300 bg-indigo-600 px-4 py-2 text-lg text-white"
+        data-cy="button"
+      >
+        Watch Video
+      </button>
+    </div>
+    <script>
+      let client = new HypeLab.Client({
+        URL: 'https://api.hypelab-staging.com',
+        propertySlug: '3eb413c650',
+        environment: HypeLab.Environment.Development,
+      });
+
+      client.identity.setWalletAddresses(['0x123']);
+
+      HypeLab.setClient(client);
+
+      const handleRewarded = function () {
+        // Grant a reward (e.g., Give an in-game item, unlock a paywall, etc.)
+        console.log('handleRewarded called');
+      };
+      var rewarded = HypeLab.rewarded({ placement: 'f31318b055', container: 'rewarded', onComplete: handleRewarded });
+
+      document.getElementById('hypelab-btn').addEventListener('click', function () {
+        rewarded.show();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "status": "success",
+  "code": "200",
+  "message": "Load Success",
+  "data": {
+    "advertiser": "Gemini",
+    "headline": "A simple way to buy crypto",
+    "body": "",
+    "display_url": "gemini.com",
+    "cta_url": "https://web.hypelab-staging.com/click?campaign_slug=ed0427151e\u0026creative_set_slug=fcd9f99545\u0026placement_slug=faucet_rewarded",
+    "cta_text": "Sign up now",
+    "campaign_slug": "ed0427151e",
+    "creative_set_slug": "fcd9f99545",
+    "creative_set_type": "video",
+    "creative_set": {
+      "video": "https://di30gnjrtlisb.cloudfront.net/up/asset/00fd954041/b83188c4f0.mp4?tr=w-600",
+      "icon": "https://di30gnjrtlisb.cloudfront.net/up/asset/fecba849d4/b83188c4f0.png?tr=w-100",
+      "poster": "https://di30gnjrtlisb.cloudfront.net/up/asset/535d0399be/b83188c4f0.png?tr=w-600"
+    },
+    "fragment": {
+      "version": 3,
+      "format": "rewarded",
+      "url": "https://di30gnjrtlisb.cloudfront.net/up/fragment/rewarded/85e2d642d6.hype"
+    }
+  }
+}

@@ -1,12 +1,9 @@
 describe('Native', () => {
+  beforeEach(() => {
+    cy.interceptAdRequest('native.json');
+  });
+
   it('renders a clickable native ad', () => {
-    cy.interceptWithFile(
-      {
-        method: 'POST',
-        url: 'https://api.hypelab-staging.com/v1/requests',
-      },
-      'native'
-    );
     cy.visit('../../native.html');
 
     cy.viewport(500, 520);
@@ -36,14 +33,6 @@ describe('Native', () => {
   });
 
   it('fires the impression ping', () => {
-    cy.interceptWithFile(
-      {
-        method: 'POST',
-        url: 'https://api.hypelab-staging.com/v1/requests',
-      },
-      'native'
-    );
-
     cy.intercept('POST', 'https://api.hypelab-staging.com/v1/events', (req) => {
       expect(req.body).to.deep.include({
         campaign_slug: 'b33847379f',

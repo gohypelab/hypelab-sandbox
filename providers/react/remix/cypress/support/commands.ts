@@ -36,32 +36,34 @@
 //   }
 // }
 
-Cypress.Commands.add(
-  "interceptWithFile",
-  (routeMatcher: RouteMatcher, fixtureName: string) => {
-    return cy
-      .readFile(`cypress/fixtures/${fixtureName}.json`)
-      .then((contents) => {
-        return cy
-          .intercept(routeMatcher, {
-            body: contents,
-          })
-          .as("matchedUrl");
-      });
-  }
-);
+Cypress.Commands.add('interceptWithFile', (routeMatcher: RouteMatcher, filePath: string) => {
+  return cy.readFile(filePath).then((contents) => {
+    return cy.intercept(routeMatcher, {
+      body: contents,
+    });
+  });
+});
 
-Cypress.Commands.add(
-  "interceptWithFragment",
-  (routeMatcher: RouteMatcher, fragmentName: string) => {
-    return cy
-      .readFile(`cypress/fixtures/fragments/${fragmentName}.hype`)
-      .then((contents) => {
-        return cy
-          .intercept(routeMatcher, (req) => {
-            req.reply({ statusCode: 200, body: contents });
-          })
-          .as("matchedFragment");
-      });
-  }
-);
+// Intercepts the ad request with the specified format response
+Cypress.Commands.add('interceptAdRequest', (formatFixture: string) => {
+  cy.interceptWithFile(
+    {
+      method: 'POST',
+      url: 'https://api.hypelab-staging.com/v1/requests',
+    },
+    `cypress/fixtures/${formatFixture}`
+  ).as('matchedRequest');
+});
+
+// Looks up the CDN URL returned in the format response and intercepts it with the specified fragment file
+Cypress.Commands.add('interceptFragmentRequest', (formatFixture: string, fragmentFile: string) => {
+  cy.fixture(formatFixture).then((formatResponse) => {
+    cy.interceptWithFile(
+      {
+        method: 'GET',
+        url: formatResponse.data.fragment.url,
+      },
+      `cypress/fixtures/fragments/${fragmentFile}`
+    ).as('matchedFragment');
+  });
+});
